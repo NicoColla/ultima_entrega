@@ -1,0 +1,45 @@
+{% extends "mercado/base_mercado.html" %}
+
+{% block title %}Publicar Auto{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Publicar Auto</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="id_marca">Marca</label>
+        {{ form.marca }}
+    </div>
+    <div class="mb-3">
+        <label for="id_modelo">Modelo</label>
+        {{ form.modelo }}
+    </div>
+    <div class="mb-3">
+        <label for="id_ano">Año</label>
+        {{ form.ano }}
+    </div>
+    <div class="mb-3">
+        <label for="id_kilometros">Kilómetros</label>
+        {{ form.kilometros }}
+    </div>
+    <div class="mb-3 d-flex">
+        <div class="me-3">
+            <label for="id_moneda">Moneda</label>
+            {{ form.moneda }}
+        </div>
+        <div>
+            <label for="id_precio">Precio</label>
+            {{ form.precio }}
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="id_imagen">Imagen</label>
+        {{ form.imagen }}
+    </div>
+    <div class="mb-3">
+        <label for="id_descripcion">Descripción</label>
+        {{ form.descripcion }}
+    </div>
+    <button type="submit" class="btn btn-primary">Publicar</button>
+</form>
+{% endblock %}
