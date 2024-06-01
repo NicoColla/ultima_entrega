@@ -11,6 +11,7 @@ def publicar(request):
     if request.method == 'POST':
         form = PublicarAutoForm(request.POST, request.FILES)
         if form.is_valid():
+            form.save()
             return redirect('mercado:inicio')
     else:
         form = PublicarAutoForm()
@@ -18,3 +19,4 @@ def publicar(request):
 
 def perfil(request):
     return render(request, 'barra/perfil.html')
+
