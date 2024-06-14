@@ -20,7 +20,7 @@ def loguearse(request):
                 form.add_error(None, 'Los datos ingresados son incorrectos, vuelva a intentarlo.')
     else:
         form = LoginForm()
-    return render(request, 'usuarios/login.html', {'form': form})
+    return render(request, 'usuarios/login.html', {'form': form, 'show_buttons': False})
 
 def registrarse(request):
     if request.method == 'POST':
