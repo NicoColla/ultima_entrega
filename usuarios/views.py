@@ -36,7 +36,7 @@ def registrarse(request):
             apellido = form.cleaned_data.get('last_name')
             return render(request, 'usuarios/register_success.html', {'nombre': nombre, 'apellido': apellido})
         else:
-            print("Formulario no es válido: ", form.errors)
+            form.add_error(None, "Algunos datos fueron ingresados incorrectamente.")
     else:
         form = RegistroForm()
     return render(request, 'usuarios/register.html', {'form': form})

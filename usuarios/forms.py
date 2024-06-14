@@ -1,10 +1,12 @@
 from django import forms
 from .models import Usuario
+from django.core.exceptions import ValidationError 
+import re
 
 class RegistroForm(forms.ModelForm):
-    contrasena = forms.CharField(widget=forms.PasswordInput, min_length=8, label="Contraseña")
+    contrasena = forms.CharField(widget=forms.PasswordInput, min_length=8, max_length=24, label="Contraseña")
     confirmar_contrasena = forms.CharField(widget=forms.PasswordInput, label="Confirmar Contraseña")
-    telefono = forms.CharField(max_length=15, required=False, label="Teléfono / Whatsapp")
+    telefono = forms.CharField(min_length=10, max_length=10, required=False, label="Teléfono / Whatsapp")
 
     DIAS = [(str(i), str(i)) for i in range(1, 32)]
     MESES = [(str(i), str(i)) for i in range(1, 13)]
@@ -23,7 +25,13 @@ class RegistroForm(forms.ModelForm):
             'email': 'Correo Electrónico',
             'telefono': 'Teléfono / Whatsapp',
         }
-
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        email_pattern = re.compile(r'^[\w\.-]+@[\w\.-]+\.\w{2,3}$')
+        if email and not email_pattern.match(email):
+            raise forms.ValidationError("El correo electrónico debe tener un formato válido y terminar en '.com'")
+        return email
+    
     def clean(self):
         cleaned_data = super().clean()
         contrasena = cleaned_data.get('contrasena')
