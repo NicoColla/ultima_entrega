@@ -36,7 +36,7 @@ class VentaVehiculo(Vehiculo):
     precio = models.DecimalField(max_digits=100, decimal_places=2)
     moneda = models.CharField(max_length=3, choices=MONEDAS, default="ARS")
     color = models.CharField(max_length=20, choices=[(color, color) for color in COLORES], default="Negro")
-    imagen = models.ImageField(upload_to='vehiculos/')
+    imagen = models.ImageField(upload_to='media/vehiculos/')
     descripcion = models.TextField()
 
     def __str__(self):
