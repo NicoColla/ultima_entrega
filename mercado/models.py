@@ -19,20 +19,8 @@ COLORES = [
 ]
 
 MONEDAS = [
-    "ARS", "USD"
+    ("ARS", "ARS"), ("USD", "USD")
 ]
-
-class Precio(models.Model):
-    moneda = models.CharField(max_length=3, choices=[(moneda, moneda) for moneda in MONEDAS])
-    valor = models.DecimalField(max_digits=100, decimal_places=2)
-
-    @staticmethod
-    def get_or_create(moneda, valor):
-        precio, created = Precio.objects.get_or_create(moneda=moneda, valor=valor)
-        return precio
-
-    def __str__(self):
-        return f"{self.moneda} {self.valor}"
 
 class Vehiculo(models.Model):
     tipo = models.CharField(max_length=20, choices=[(tipo, tipo) for tipo in TIPOS])
@@ -45,10 +33,11 @@ class Vehiculo(models.Model):
 
 class VentaVehiculo(Vehiculo):
     kilometros = models.IntegerField()
-    precio = models.ForeignKey(Precio, on_delete=models.CASCADE)
+    precio = models.DecimalField(max_digits=100, decimal_places=2)
+    moneda = models.CharField(max_length=3, choices=MONEDAS, default="ARS")
     color = models.CharField(max_length=20, choices=[(color, color) for color in COLORES], default="Negro")
     imagen = models.ImageField(upload_to='vehiculos/')
     descripcion = models.TextField()
 
     def __str__(self):
-        return f"{self.marca} {self.modelo} ({self.año}) - {self.precio}"
+        return f"{self.marca} {self.modelo} ({self.año}) - {self.precio} {self.moneda}"

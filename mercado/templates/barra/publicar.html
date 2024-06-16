@@ -1,4 +1,5 @@
 {% extends "mercado/base_mercado.html" %}
+{% load custom_filters %}
 
 {% block title %}Publicar Auto{% endblock %}
 
@@ -6,6 +7,10 @@
 <h1 class="text-center">Publicar Auto</h1>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
+    <div class="mb-3">
+        <label for="id_tipo">Tipo</label>
+        {{ form.tipo }}
+    </div>
     <div class="mb-3">
         <label for="id_marca">Marca</label>
         {{ form.marca }}
@@ -15,22 +20,23 @@
         {{ form.modelo }}
     </div>
     <div class="mb-3">
-        <label for="id_ano">Año</label>
-        {{ form.ano }}
+        <label for="id_año">Año</label>
+        {{ form.año }}
     </div>
     <div class="mb-3">
         <label for="id_kilometros">Kilómetros</label>
         {{ form.kilometros }}
     </div>
-    <div class="mb-3 d-flex">
-        <div class="me-3">
-            <label for="id_moneda">Moneda</label>
-            {{ form.moneda }}
+    <div class="mb-3">
+        <label for="id_precio">Precio</label>
+        <div class="d-flex">
+            {{ form.moneda|add_class:"me-2" }}
+            {{ form.precio|add_class:"flex-grow-1" }}
         </div>
-        <div>
-            <label for="id_precio">Precio</label>
-            {{ form.precio }}
-        </div>
+    </div>
+    <div class="mb-3">
+        <label for="id_color">Color</label>
+        {{ form.color }}
     </div>
     <div class="mb-3">
         <label for="id_imagen">Imagen</label>
