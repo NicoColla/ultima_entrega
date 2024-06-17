@@ -14,13 +14,12 @@
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                    <h5 class="card-title">{{ publicacion.marca }} {{ publicacion.modelo }}</h5>
-                    <p class="card-text">{{ publicacion.vendedor.first_name }} {{ publicacion.vendedor.last_name }}</p>
+                    <h6 class="card-title">{{ publicacion.marca }} {{ publicacion.modelo }} {{ publicacion.año }}</h6>
+                    <p class="card-text">{{publicacion.kilometros}} km</p>
+                    <h3 class="card-text">{{ publicacion.moneda }} {{ publicacion.precio }}</h3>
                     <p class="card-text">
-                        <small class="text-muted">{{ publicacion.vendedor.email }}</small><br>
-                        <small class="text-muted">Tel: {{ publicacion.vendedor.telefono }}</small>
+                        <sub>{{publicacion.descripcion}}</sub>
                     </p>
-                    <p class="card-text">{{ publicacion.moneda }} {{ publicacion.precio }}</p>
                 </div>
             </div>
         </div>
