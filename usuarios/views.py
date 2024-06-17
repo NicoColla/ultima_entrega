@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from .forms import RegistroForm, LoginForm
 from .models import Usuario
 
 def iniciar(request):
     return render(request, 'usuarios/base.html')
 
-def loguearse(request):
+def iniciar_sesion(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -40,3 +40,7 @@ def registrarse(request):
     else:
         form = RegistroForm()
     return render(request, 'usuarios/register.html', {'form': form})
+
+def cerrar_sesion(request):
+    logout(request)
+    return redirect('usuarios:inicio')

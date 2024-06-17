@@ -122,6 +122,7 @@ USE_TZ = True
 
 LOGIN_URL = 'usuarios:login'
 LOGIN_REDIRECT_URL = 'mercado:inicio'
+LOGOUT_REDIRECT_URL = 'usuarios:inicio'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
