@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from .forms import PublicarForm
+from .models import VentaVehiculo
 
 def inicio(request):
-    return render(request, 'barra/inicio.html')
-
-def buscar(request):
-    return render(request, 'barra/buscar.html')
+    publicaciones = VentaVehiculo.objects.select_related('vendedor').all()
+    return render(request, 'barra/inicio.html', {'publicaciones': publicaciones})
 
 def publicar(request):
     if request.method == 'POST':

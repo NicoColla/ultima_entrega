@@ -3,7 +3,31 @@
 {% block title %}Inicio{% endblock %}
 
 {% block content %}
-<h1>Inicio</h1>
-<p>Bienvenido a la página de inicio.</p>
-{% endblock %}
+<h1 class="text-center">Publicaciones</h1>
 
+{% if publicaciones %}
+    {% for publicacion in publicaciones %}
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-4">  
+                <img src="{{ publicacion.imagen.url }}" class="img-fluid rounded-start" alt="Imagen del vehículo">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ publicacion.marca }} {{ publicacion.modelo }}</h5>
+                    <p class="card-text">{{ publicacion.vendedor.first_name }} {{ publicacion.vendedor.last_name }}</p>
+                    <p class="card-text">
+                        <small class="text-muted">{{ publicacion.vendedor.email }}</small><br>
+                        <small class="text-muted">Tel: {{ publicacion.vendedor.telefono }}</small>
+                    </p>
+                    <p class="card-text">{{ publicacion.moneda }} {{ publicacion.precio }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No hay publicaciones disponibles en este momento.</p>
+{% endif %}
+
+{% endblock %}

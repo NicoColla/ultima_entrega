@@ -1,4 +1,5 @@
 from django.db import models
+from usuarios.models import Usuario
 
 MARCAS = [
     "Volkswagen", "Audi", "Ford", "Chevrolet", "Honda", "Toyota",
@@ -32,6 +33,7 @@ class Vehiculo(models.Model):
         return f"{self.tipo} {self.marca} {self.modelo} ({self.año})"
 
 class VentaVehiculo(Vehiculo):
+    vendedor = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True, blank=True)
     kilometros = models.IntegerField()
     precio = models.DecimalField(max_digits=100, decimal_places=2)
     moneda = models.CharField(max_length=3, choices=MONEDAS, default="ARS")
