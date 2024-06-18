@@ -2,13 +2,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from usuarios import views as usuarios_views
+from mercado import views as mercado_views
 
 urlpatterns = [
+    path('', mercado_views.inicio, name='home'),
     path('admin/', admin.site.urls),
     path('usuarios/', include('usuarios.urls')),
     path('mercado/', include('mercado.urls')),
-    path('', usuarios_views.iniciar, name='home'),
 ]
 
 if settings.DEBUG:

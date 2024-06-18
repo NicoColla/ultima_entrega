@@ -3,9 +3,6 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import RegistroForm, LoginForm
 from .models import Usuario
 
-def iniciar(request):
-    return render(request, 'usuarios/base.html')
-
 def iniciar_sesion(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -43,4 +40,4 @@ def registrarse(request):
 
 def cerrar_sesion(request):
     logout(request)
-    return redirect('usuarios:inicio')
+    return redirect('mercado:perfil')

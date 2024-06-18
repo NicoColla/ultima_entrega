@@ -60,7 +60,7 @@ def publicar(request):
 @login_required
 def publicaciones_usuario(request):
     publicaciones = VentaVehiculo.objects.filter(vendedor=request.user)
-    return render(request, 'barra/configuracion/publicaciones_usuario.html', {'publicaciones': publicaciones})
+    return render(request, 'barra/perfil/publicaciones_usuario.html', {'publicaciones': publicaciones})
 
 @login_required
 def editar_publicacion(request, publicacion_id):
@@ -72,7 +72,7 @@ def editar_publicacion(request, publicacion_id):
             return redirect('mercado:publicaciones_usuario')
     else:
         form = PublicarForm(instance=publicacion)
-    return render(request, 'barra/configuracion/editar_publicacion.html', {'form': form})
+    return render(request, 'barra/perfil/editar_publicacion.html', {'form': form})
 
 @login_required
 def borrar_publicacion(request, publicacion_id):
@@ -81,9 +81,9 @@ def borrar_publicacion(request, publicacion_id):
     if request.method == 'POST':
         publicacion.delete()
         return redirect('mercado:publicaciones_usuario')
-    return render(request, 'barra/configuracion/borrar_publicacion.html', {'publicacion': publicacion})
+    return render(request, 'barra/perfil/borrar_publicacion.html', {'publicacion': publicacion})
 
-@login_required
+
 def ver_publicacion(request, publicacion_id):
     publicacion = get_object_or_404(VentaVehiculo, id=publicacion_id)
     comentarios = publicacion.comentarios.all() # type: ignore
@@ -95,9 +95,11 @@ def ver_publicacion(request, publicacion_id):
         'form': form
     })
 
-@login_required
-def configuracion(request):
-    return render(request, 'barra/configuracion.html', {'usuario': request.user})
+def perfil(request):
+    if request.user.is_authenticated:
+        return render(request, 'barra/perfil.html', {'usuario': request.user})
+    else:
+        return render(request, 'usuarios/usuarios.html')
 
 @login_required
 def agregar_comentario(request, publicacion_id):
