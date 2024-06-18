@@ -23,10 +23,7 @@
                     </p>
                     <div class="text-end">
                         <a href="{% url 'mercado:editar_publicacion' publicacion.id %}" class="btn btn-secondary mb-2">Editar</a>
-                        <form method="post" action="{% url 'mercado:borrar_publicacion' publicacion.id %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger">Borrar</button>
-                        </form>
+                        <a href="{% url 'mercado:borrar_publicacion' publicacion.id %}" class="btn btn-danger">Borrar</a>
                     </div>
                 </div>
             </div>
