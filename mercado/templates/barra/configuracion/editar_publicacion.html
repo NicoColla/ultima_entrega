@@ -1,0 +1,54 @@
+{% extends "mercado/base_mercado.html" %}
+{% load custom_filters %}
+
+{% block title %}Editar Publicación{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Editar Publicación</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="id_tipo">Tipo</label>
+        {{ form.tipo }}
+    </div>
+    <div class="mb-3">
+        <label for="id_marca">Marca</label>
+        {{ form.marca }}
+    </div>
+    <div class="mb-3">
+        <label for="id_modelo">Modelo</label>
+        {{ form.modelo }}
+    </div>
+    <div class="mb-3">
+        <label for="id_año">Año</label>
+        {{ form.año }}
+    </div>
+    <div class="mb-3">
+        <label for="id_kilometros">Kilómetros</label>
+        {{ form.kilometros }}
+    </div>
+    <div class="mb-3">
+        <label for="id_precio">Precio</label>
+        <div class="d-flex">
+            {{ form.moneda|add_class:"me-2" }}
+            {{ form.precio|add_class:"flex-grow-1" }}
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="id_color">Color</label>
+        {{ form.color }}
+    </div>
+    <div class="mb-3">
+        <label for="id_imagen">Imagen</label>
+        {{ form.imagen }}
+    </div>
+    <div class="mb-3">
+        <label for="id_descripcion">Descripción</label>
+        {{ form.descripcion }}
+    </div>
+    <div class="d-flex justify-content-between">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href=".." class="btn btn-secondary">Volver</a>
+    </div>
+</form>
+{% endblock %}
