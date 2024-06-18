@@ -1,0 +1,14 @@
+{% extends "mercado/base_mercado.html" %}
+
+{% block title %}Confirmar Borrar{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Confirmar Borrar Publicación</h1>
+<p>¿Estás seguro de que deseas eliminar la publicación de {{ publicacion.marca }} {{ publicacion.modelo }}?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Borrar</button>
+    <a href="{% url 'mercado:publicaciones_usuario' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

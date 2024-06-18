@@ -42,8 +42,10 @@ def editar_publicacion(request, publicacion_id):
 @login_required
 def borrar_publicacion(request, publicacion_id):
     publicacion = get_object_or_404(VentaVehiculo, id=publicacion_id, vendedor=request.user)
-    publicacion.delete()
-    return redirect('mercado:publicaciones_usuario')
+    if request.method == 'POST':
+        publicacion.delete()
+        return redirect('mercado:publicaciones_usuario')
+    return render(request, 'barra/configuracion/borrar_publicacion.html', {'publicacion': publicacion})
 
 @login_required
 def configuracion(request):
