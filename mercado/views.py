@@ -3,6 +3,7 @@ from .models import VentaVehiculo, Comentario
 from .forms import PublicarForm, ComentarioForm, RespuestaForm, FiltroBusquedaForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.db.models import Q
 
 def inicio(request):
     form = FiltroBusquedaForm(request.GET or None)
@@ -17,6 +18,7 @@ def inicio(request):
         color = form.cleaned_data.get('color')
         precio_min = form.cleaned_data.get('precio_min')
         precio_max = form.cleaned_data.get('precio_max')
+        combustible = form.cleaned_data.get('combustible')
 
         form.actualizar_modelos(tipo, marca)
 
@@ -36,6 +38,8 @@ def inicio(request):
             publicaciones = publicaciones.filter(precio__gte=precio_min)
         if precio_max:
             publicaciones = publicaciones.filter(precio__lte=precio_max)
+        if combustible:
+            publicaciones = publicaciones.filter(Q(combustible=combustible) | Q(alt_combustible=combustible))
 
     return render(request, 'barra/inicio.html', {'publicaciones': publicaciones, 'form': form})
 

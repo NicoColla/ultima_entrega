@@ -1,10 +1,10 @@
 from django import forms
-from .models import VentaVehiculo, Comentario, Respuesta, TIPOS, MARCAS, COLORES
+from .models import VentaVehiculo, Comentario, Respuesta, TIPOS, MARCAS, COLORES, COMBUSTIBLE
 
 class PublicarForm(forms.ModelForm):
     class Meta:
         model = VentaVehiculo
-        fields = ['tipo', 'marca', 'modelo', 'año', 'kilometros', 'precio', 'color', 'imagen', 'descripcion']
+        fields = ['tipo', 'marca', 'modelo', 'año', 'kilometros', 'precio', 'color', 'imagen', 'descripcion', 'combustible', 'alt_combustible']
         widgets = {
             'tipo': forms.Select(attrs={'class': 'form-control'}),
             'marca': forms.Select(attrs={'class': 'form-control'}),
@@ -15,6 +15,8 @@ class PublicarForm(forms.ModelForm):
             'color': forms.Select(attrs={'class': 'form-control'}),
             'imagen': forms.FileInput(attrs={'class': 'form-control'}),
             'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'combustible': forms.Select(attrs={'class': 'form-control'}),
+            'alt_combustible': forms.Select(attrs={'class': 'form-control'}),
         }
 
     def save(self, commit=True):
@@ -49,6 +51,7 @@ class FiltroBusquedaForm(forms.Form):
     color = forms.ChoiceField(choices=[('', 'Todos')] + [(color, color) for color in COLORES], required=False, widget=forms.Select(attrs={'class': 'form-control'}))
     precio_min = forms.DecimalField(required=False, max_digits=100, decimal_places=2, widget=forms.NumberInput(attrs={'class': 'form-control'}))
     precio_max = forms.DecimalField(required=False, max_digits=100, decimal_places=2, widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    combustible = forms.ChoiceField(choices=[('', 'Todos')] + COMBUSTIBLE, required=False, widget=forms.Select(attrs={'class': 'form-control'}))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

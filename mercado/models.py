@@ -20,12 +20,25 @@ COLORES = [
     "Blanco", "Gris claro", "Gris oscuro", "Negro", "Rojo", "Granate", "Azul", "Verde"
 ]
 
+TRANSMISION = [
+    "Manual", "Automático"
+]
+
+COMBUSTIBLE = [
+    ("Nafta", "Nafta"),
+    ("Diesel", "Diesel"),
+    ("GNC", "GNC"),
+    ("Electricidad", "Electricidad")
+]
+
 
 class Vehiculo(models.Model):
     tipo = models.CharField(max_length=20, choices=[(tipo, tipo) for tipo in TIPOS])
     marca = models.CharField(max_length=20, choices=[(marca, marca) for marca in MARCAS])
     modelo = models.CharField(max_length=100)
     año = models.IntegerField()
+    combustible = models.CharField(max_length=20, choices=COMBUSTIBLE, default="Nafta")
+    alt_combustible = models.CharField(max_length=20, choices=COMBUSTIBLE, null=True, blank=True)
 
     def __str__(self):
         return f"{self.tipo} {self.marca} {self.modelo} ({self.año})"
