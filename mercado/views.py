@@ -51,7 +51,7 @@ def borrar_publicacion(request, publicacion_id):
 @login_required
 def ver_publicacion(request, publicacion_id):
     publicacion = get_object_or_404(VentaVehiculo, id=publicacion_id)
-    return render(request, 'publicacion/ver_publicacion.html', {'publicacion': publicacion})
+    return render(request, 'barra/publicacion/ver_publicacion.html', {'publicacion': publicacion})
 
 @login_required
 def configuracion(request):
