@@ -1,0 +1,28 @@
+{% extends "mercado/base_mercado.html" %}
+
+{% block title %}Ver Publicación{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Detalles de la Publicación</h1>
+
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="{{ publicacion.imagen.url }}" class="img-fluid rounded-start" alt="Imagen del vehículo">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{ publicacion.marca }} {{ publicacion.modelo }}</h5>
+                <p class="card-text">{{ publicacion.año }} | {{publicacion.kilometros}} km</p>
+                <h3 class="card-text">{{ publicacion.moneda }} {{ publicacion.precio|custom_format }}</h3>
+                <p class="card-text">{{ publicacion.descripcion }}</p>
+                <p class="card-text"><strong>Color:</strong> {{ publicacion.color }}</p>
+                <p class="card-text"><strong>Vendedor:</strong> {{ publicacion.vendedor.first_name }} {{ publicacion.vendedor.last_name }} - {{ publicacion.vendedor.email }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a href="javascript:history.back()" class="btn btn-secondary">Volver</a>
+
+{% endblock %}

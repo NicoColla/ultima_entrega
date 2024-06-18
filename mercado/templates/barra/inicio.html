@@ -8,23 +8,25 @@
 
 {% if publicaciones %}
     {% for publicacion in publicaciones %}
-    <div class="card mb-3" style="max-width: 540px;">
-        <div class="row g-0">
-            <div class="col-md-4">  
-                <img src="{{ publicacion.imagen.url }}" class="img-fluid rounded-start" alt="Imagen del vehículo">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h6 class="card-title">{{ publicacion.marca }} {{ publicacion.modelo }} </h6>
-                    <p class="card-text">{{ publicacion.año }} | {{publicacion.kilometros}} km</p>
-                    <h3 class="card-text">{{ publicacion.moneda }} {{ publicacion.precio|custom_format }}</h3>
-                    <p class="card-text">
-                        <sub>{{publicacion.descripcion}}</sub>
-                    </p>
+    <a href="{% url 'mercado:ver_publicacion' publicacion.id %}" class="text-decoration-none text-dark">
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-4">  
+                    <img src="{{ publicacion.imagen.url }}" class="img-fluid rounded-start" alt="Imagen del vehículo">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h6 class="card-title">{{ publicacion.marca }} {{ publicacion.modelo }} </h6>
+                        <p class="card-text">{{ publicacion.año }} | {{publicacion.kilometros}} km</p>
+                        <h3 class="card-text">{{ publicacion.moneda }} {{ publicacion.precio|custom_format }}</h3>
+                        <p class="card-text">
+                            <sub>{{publicacion.descripcion}}</sub>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </a>
     {% endfor %}
 {% else %}
     <p>No hay publicaciones disponibles en este momento.</p>
