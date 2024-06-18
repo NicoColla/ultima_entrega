@@ -25,8 +25,6 @@ def inicio(request):
             publicaciones = publicaciones.filter(precio__gte=form.cleaned_data['precio_min'])
         if form.cleaned_data['precio_max']:
             publicaciones = publicaciones.filter(precio__lte=form.cleaned_data['precio_max'])
-        if form.cleaned_data['moneda']:
-            publicaciones = publicaciones.filter(moneda=form.cleaned_data['moneda'])
 
     return render(request, 'barra/inicio.html', {'publicaciones': publicaciones, 'form': form})
 

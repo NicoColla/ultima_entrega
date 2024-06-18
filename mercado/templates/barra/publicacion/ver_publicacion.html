@@ -15,7 +15,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{ publicacion.marca }} {{ publicacion.modelo }}</h5>
                 <p class="card-text">{{ publicacion.año }} | {{ publicacion.kilometros }} km</p>
-                <h3 class="card-text">{{ publicacion.moneda }} {{ publicacion.precio|custom_format }}</h3>
+                <h3 class="card-text">ARS {{ publicacion.precio|custom_format }}</h3>
                 <p class="card-text">{{ publicacion.descripcion }}</p>
                 <p class="card-text"><strong>Color:</strong> {{ publicacion.color }}</p>
                 <p class="card-text"><strong>Vendedor:</strong> {{ publicacion.vendedor.first_name }} {{ publicacion.vendedor.last_name }} - {{ publicacion.vendedor.email }}</p>
