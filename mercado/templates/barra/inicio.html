@@ -1,4 +1,5 @@
 {% extends "mercado/base_mercado.html" %}
+{% load custom_filters %}
 
 {% block title %}Inicio{% endblock %}
 
@@ -14,9 +15,9 @@
             </div>
             <div class="col-md-8">
                 <div class="card-body">
-                    <h6 class="card-title">{{ publicacion.marca }} {{ publicacion.modelo }} {{ publicacion.año }}</h6>
-                    <p class="card-text">{{publicacion.kilometros}} km</p>
-                    <h3 class="card-text">{{ publicacion.moneda }} {{ publicacion.precio}}</h3>
+                    <h6 class="card-title">{{ publicacion.marca }} {{ publicacion.modelo }} </h6>
+                    <p class="card-text">{{ publicacion.año }} | {{publicacion.kilometros}} km</p>
+                    <h3 class="card-text">{{ publicacion.moneda }} {{ publicacion.precio|custom_format }}</h3>
                     <p class="card-text">
                         <sub>{{publicacion.descripcion}}</sub>
                     </p>
