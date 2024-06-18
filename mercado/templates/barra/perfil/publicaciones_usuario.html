@@ -4,34 +4,63 @@
 {% block title %}Mis Publicaciones{% endblock %}
 
 {% block content %}
+<style>
+    .publicacion-card {
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto 20px;
+        position: relative;
+    }
+    .publicacion-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .publicacion-card .card-body {
+        padding: 15px;
+    }
+    .acciones {
+        position: absolute;
+        bottom: 10px;
+        right: 15px;
+    }
+</style>
+
 <h1 class="text-center">Mis Publicaciones Activas</h1>
 
 {% if publicaciones %}
     {% for publicacion in publicaciones %}
-    <div class="card mb-3" style="max-width: 540px;">
-        <div class="row g-0">
-            <div class="col-md-4">  
-                <img src="{{ publicacion.imagen.url }}" class="img-fluid rounded-start" alt="Imagen del vehículo">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h6 class="card-title">{{ publicacion.marca }} {{ publicacion.modelo }} </h6>
-                    <p class="card-text">{{ publicacion.año }} | {{publicacion.kilometros}} km</p>
-                    <h3 class="card-text">{{ publicacion.moneda }} {{ publicacion.precio|custom_format }}</h3>
-                    <p class="card-text">
-                        <sub>{{publicacion.descripcion}}</sub>
-                    </p>
-                    <div class="text-end">
-                        <a href="{% url 'mercado:editar_publicacion' publicacion.id %}" class="btn btn-secondary mb-2">Editar</a>
-                        <a href="{% url 'mercado:borrar_publicacion' publicacion.id %}" class="btn btn-danger">Borrar</a>
+    <div class="publicacion-card">
+        <a href="{% url 'mercado:ver_publicacion' publicacion.id %}" class="text-decoration-none text-dark">
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ publicacion.imagen.url }}" class="img-fluid rounded-start" alt="Imagen del vehículo">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h6 class="card-title">{{ publicacion.marca }} {{ publicacion.modelo }} </h6>
+                            <p class="card-text">{{ publicacion.año }} | {{publicacion.kilometros}} km</p>
+                            <h3 class="card-text">{{ publicacion.moneda }} {{ publicacion.precio|custom_format }}</h3>
+                            <p class="card-text">
+                                <sub>{{publicacion.descripcion}}</sub>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
+        </a>
+        <div class="acciones">
+            <a href="{% url 'mercado:editar_publicacion' publicacion.id %}" class="btn btn-secondary">Editar</a>
+            <a href="{% url 'mercado:borrar_publicacion' publicacion.id %}" class="btn btn-danger">Borrar</a>
         </div>
     </div>
     {% endfor %}
 {% else %}
-    <p>No tienes publicaciones activas en este momento.</p>
+    <p class="text-center">No tienes publicaciones activas en este momento.</p>
 {% endif %}
 
 {% endblock %}
+
+
+
