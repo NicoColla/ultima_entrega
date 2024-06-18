@@ -1,0 +1,18 @@
+{% extends "mercado/base_mercado.html" %}
+
+{% block title %}Configuracion{% endblock %}
+
+{% block content %}
+<h3>Información del usuario:</h3>
+
+<div class="card">
+    <div class="card-body">
+        <h1 class="card-title">{{ usuario.first_name }} {{ usuario.last_name }}</h1>
+        <p class="card-text"><strong>Correo Electrónico:</strong> {{ usuario.email }}</p>
+        <p class="card-text"><strong>Teléfono:</strong> {{ usuario.telefono }}</p>
+    </div>
+</div>
+
+<a href="{% url 'usuarios:logout' %}" class="btn btn-danger">Cerrar sesion</a>
+
+{% endblock %}

@@ -6,6 +6,6 @@ app_name = 'mercado'
 urlpatterns = [
     path('', views.inicio, name='inicio'),
     path('publicar/', views.publicar, name='publicar'),
-    path('perfil/', views.perfil, name='perfil'),
+    path('configuracion/', views.configuracion, name='configuracion'),
 ]
 

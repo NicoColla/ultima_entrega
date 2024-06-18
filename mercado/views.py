@@ -4,6 +4,7 @@ from .models import VentaVehiculo
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 
+@login_required
 def inicio(request):
     publicaciones = VentaVehiculo.objects.select_related('vendedor').all()
     return render(request, 'barra/inicio.html', {'publicaciones': publicaciones})
@@ -22,5 +23,6 @@ def publicar(request):
     return render(request, 'barra/publicar.html', {'form': form})
 
 
-def perfil(request):
-    return render(request, 'barra/perfil.html')
+@login_required
+def configuracion(request):
+    return render(request, 'barra/configuracion.html', {'usuario': request.user})
