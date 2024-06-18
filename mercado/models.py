@@ -53,3 +53,11 @@ class Comentario(models.Model):
 
     def __str__(self):
         return f'Comentario de {self.usuario.email} en {self.publicacion.marca} {self.publicacion.modelo}'
+    
+class Respuesta(models.Model):
+    comentario = models.OneToOneField(Comentario, on_delete=models.CASCADE, related_name='respuesta')
+    texto = models.TextField()
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Respuesta a comentario de {self.comentario.usuario.email} en {self.comentario.publicacion.marca} {self.comentario.publicacion.modelo}'

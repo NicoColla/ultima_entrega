@@ -12,5 +12,6 @@ urlpatterns = [
     path('configuracion/publicaciones/editar/<int:publicacion_id>/', views.editar_publicacion, name='editar_publicacion'),
     path('publicacion/<int:publicacion_id>/', views.ver_publicacion, name='ver_publicacion'),
     path('publicacion/<int:publicacion_id>/comentario/', views.agregar_comentario, name='agregar_comentario'),
+    path('comentario/<int:comentario_id>/respuesta/', views.responder_comentario, name='respuesta'),
 ]
 

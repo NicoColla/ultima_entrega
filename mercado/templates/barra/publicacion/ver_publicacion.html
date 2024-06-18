@@ -14,7 +14,7 @@
         <div class="col-md-8">
             <div class="card-body">
                 <h5 class="card-title">{{ publicacion.marca }} {{ publicacion.modelo }}</h5>
-                <p class="card-text">{{ publicacion.año }} | {{publicacion.kilometros}} km</p>
+                <p class="card-text">{{ publicacion.año }} | {{ publicacion.kilometros }} km</p>
                 <h3 class="card-text">{{ publicacion.moneda }} {{ publicacion.precio|custom_format }}</h3>
                 <p class="card-text">{{ publicacion.descripcion }}</p>
                 <p class="card-text"><strong>Color:</strong> {{ publicacion.color }}</p>
@@ -29,3 +29,4 @@
 <a href="javascript:history.back()" class="btn btn-secondary">Volver</a>
 
 {% endblock %}
+

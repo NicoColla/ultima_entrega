@@ -22,6 +22,18 @@
         <div class="card-body">
             <p class="card-text">{{ comentario.texto }}</p>
             <p class="card-text"><small class="text-muted">Por {{ comentario.usuario.first_name }} {{ comentario.usuario.last_name }} el {{ comentario.fecha|date:"d/m/Y H:i" }}</small></p>
+            {% if comentario.respuesta %}
+            <div class="mt-3">
+                <h6>Respuesta del dueño:</h6>
+                <div class="alert alert-info">
+                    <p>{{ comentario.respuesta.texto }}</p>
+                    <p class="mb-0"><small class="text-muted">{{ comentario.respuesta.fecha|date:"d/m/Y H:i" }}</small></p>
+                </div>
+            </div>
+            {% endif %}
+            {% if user == publicacion.vendedor and not comentario.respuesta %}
+            <a href="{% url 'mercado:respuesta' comentario.id %}" class="btn btn-outline-primary mt-2">Responder</a>
+            {% endif %}
         </div>
     </div>
     {% empty %}

@@ -1,0 +1,23 @@
+{% extends "mercado/base_mercado.html" %}
+{% load custom_filters %}
+
+{% block title %}Responder Comentario{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Responder Comentario</h1>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.texto }}
+            </div>
+            <button type="submit" class="btn btn-primary">Responder</button>
+        </form>
+    </div>
+</div>
+
+<a href="{% url 'mercado:ver_publicacion' publicacion.id %}" class="btn btn-secondary mt-3">Volver</a>
+
+{% endblock %}

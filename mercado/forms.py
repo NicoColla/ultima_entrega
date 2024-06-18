@@ -1,5 +1,5 @@
 from django import forms
-from .models import VentaVehiculo, Comentario
+from .models import VentaVehiculo, Comentario, Respuesta
 
 class PublicarForm(forms.ModelForm):
     class Meta:
@@ -32,4 +32,12 @@ class ComentarioForm(forms.ModelForm):
         fields = ['texto']
         widgets = {
             'texto': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Escribe tu comentario aquí...'}),
+        }
+
+class RespuestaForm(forms.ModelForm):
+    class Meta:
+        model = Respuesta
+        fields = ['texto']
+        widgets = {
+            'texto': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Escribe tu respuesta aquí...'}),
         }
