@@ -1,5 +1,6 @@
 from django.db import models
 from usuarios.models import Usuario
+from django.conf import settings
 
 MARCAS = [
     "Volkswagen", "Audi", "Ford", "Chevrolet", "Honda", "Toyota",
@@ -43,3 +44,12 @@ class VentaVehiculo(Vehiculo):
 
     def __str__(self):
         return f"{self.marca} {self.modelo} ({self.año}) - {self.precio} {self.moneda}"
+    
+class Comentario(models.Model):
+    publicacion = models.ForeignKey(VentaVehiculo, on_delete=models.CASCADE, related_name='comentarios')
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    texto = models.TextField()
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Comentario de {self.usuario.email} en {self.publicacion.marca} {self.publicacion.modelo}'

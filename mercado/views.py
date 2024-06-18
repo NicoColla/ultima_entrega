@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import PublicarForm
-from .models import VentaVehiculo
+from .models import VentaVehiculo, Comentario
+from .forms import PublicarForm, ComentarioForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 
@@ -56,3 +56,17 @@ def ver_publicacion(request, publicacion_id):
 @login_required
 def configuracion(request):
     return render(request, 'barra/configuracion.html', {'usuario': request.user})
+
+@login_required
+def agregar_comentario(request, publicacion_id):
+    publicacion = get_object_or_404(VentaVehiculo, pk=publicacion_id)
+    print(f"Publicación ID: {publicacion.pk}")
+    if request.method == 'POST':
+        form = ComentarioForm(request.POST)
+        if form.is_valid():
+            comentario = form.save(commit=False)
+            comentario.publicacion = publicacion
+            comentario.usuario = request.user
+            comentario.save()
+            return redirect('mercado:ver_publicacion', publicacion_id=publicacion.pk)
+    return redirect('mercado:ver_publicacion', publicacion_id=publicacion.pk)

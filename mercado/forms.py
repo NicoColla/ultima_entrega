@@ -1,5 +1,5 @@
 from django import forms
-from .models import VentaVehiculo
+from .models import VentaVehiculo, Comentario
 
 class PublicarForm(forms.ModelForm):
     class Meta:
@@ -25,3 +25,11 @@ class PublicarForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+    
+class ComentarioForm(forms.ModelForm):
+    class Meta:
+        model = Comentario
+        fields = ['texto']
+        widgets = {
+            'texto': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Escribe tu comentario aquí...'}),
+        }
