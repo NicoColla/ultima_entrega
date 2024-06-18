@@ -9,24 +9,36 @@ def inicio(request):
     publicaciones = VentaVehiculo.objects.all()
 
     if form.is_valid():
-        if form.cleaned_data['tipo']:
-            publicaciones = publicaciones.filter(tipo=form.cleaned_data['tipo'])
-        if form.cleaned_data['marca']:
-            publicaciones = publicaciones.filter(marca=form.cleaned_data['marca'])
-        if form.cleaned_data['modelo']:
-            publicaciones = publicaciones.filter(modelo__icontains=form.cleaned_data['modelo'])
-        if form.cleaned_data['año']:
-            publicaciones = publicaciones.filter(año=form.cleaned_data['año'])
-        if form.cleaned_data['kilometros_max']:
-            publicaciones = publicaciones.filter(kilometros__lte=form.cleaned_data['kilometros_max'])
-        if form.cleaned_data['color']:
-            publicaciones = publicaciones.filter(color=form.cleaned_data['color'])
-        if form.cleaned_data['precio_min']:
-            publicaciones = publicaciones.filter(precio__gte=form.cleaned_data['precio_min'])
-        if form.cleaned_data['precio_max']:
-            publicaciones = publicaciones.filter(precio__lte=form.cleaned_data['precio_max'])
+        tipo = form.cleaned_data.get('tipo')
+        marca = form.cleaned_data.get('marca')
+        modelo = form.cleaned_data.get('modelo')
+        año = form.cleaned_data.get('año')
+        kilometros_max = form.cleaned_data.get('kilometros_max')
+        color = form.cleaned_data.get('color')
+        precio_min = form.cleaned_data.get('precio_min')
+        precio_max = form.cleaned_data.get('precio_max')
+
+        form.actualizar_modelos(tipo, marca)
+
+        if tipo:
+            publicaciones = publicaciones.filter(tipo=tipo)
+        if marca:
+            publicaciones = publicaciones.filter(marca=marca)
+        if modelo:
+            publicaciones = publicaciones.filter(modelo__icontains=modelo)
+        if año:
+            publicaciones = publicaciones.filter(año=año)
+        if kilometros_max:
+            publicaciones = publicaciones.filter(kilometros__lte=kilometros_max)
+        if color:
+            publicaciones = publicaciones.filter(color=color)
+        if precio_min:
+            publicaciones = publicaciones.filter(precio__gte=precio_min)
+        if precio_max:
+            publicaciones = publicaciones.filter(precio__lte=precio_max)
 
     return render(request, 'barra/inicio.html', {'publicaciones': publicaciones, 'form': form})
+
 
 @login_required
 def publicar(request):

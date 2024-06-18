@@ -37,7 +37,7 @@ class RespuestaForm(forms.ModelForm):
         model = Respuesta
         fields = ['texto']
         widgets = {
-            'texto': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Escribe tu respuesta aquí...'}),
+            'texto': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Escribí tu respuesta a...'}),
         }
 
 class FiltroBusquedaForm(forms.Form):
@@ -60,3 +60,18 @@ class FiltroBusquedaForm(forms.Form):
         for modelo in modelos_existentes:
             modelos_choices.append((modelo, modelo))
         return modelos_choices
+
+    def actualizar_modelos(self, tipo_seleccionado, marca_seleccionada):
+        modelos_choices = [('', 'Todos')]
+        if tipo_seleccionado and marca_seleccionada:
+            modelos_existentes = VentaVehiculo.objects.filter(tipo=tipo_seleccionado, marca=marca_seleccionada).values_list('modelo', flat=True).distinct()
+        elif tipo_seleccionado:
+            modelos_existentes = VentaVehiculo.objects.filter(tipo=tipo_seleccionado).values_list('modelo', flat=True).distinct()
+        elif marca_seleccionada:
+            modelos_existentes = VentaVehiculo.objects.filter(marca=marca_seleccionada).values_list('modelo', flat=True).distinct()
+        else:
+            modelos_existentes = VentaVehiculo.objects.values_list('modelo', flat=True).distinct()
+
+        for modelo in modelos_existentes:
+            modelos_choices.append((modelo, modelo))
+        self.fields['modelo'].choices = modelos_choices
