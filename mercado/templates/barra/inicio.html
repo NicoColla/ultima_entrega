@@ -4,32 +4,124 @@
 {% block title %}Inicio{% endblock %}
 
 {% block content %}
+<style>
+    .filtro-container {
+        display: flex;
+    }
+    .filtro-busqueda {
+        width: 300px;
+        margin-right: 20px;
+    }
+    .filtro-busqueda .card-body {
+        display: flex;
+        flex-direction: column;
+    }
+    .filtro-busqueda .card-body label {
+        margin-top: 10px;
+    }
+    .filtro-busqueda .card-body .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+    .filtro-busqueda .card-body .form-inline-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .filtro-busqueda .card-body .form-inline-group label {
+        flex: 1;
+    }
+    .filtro-busqueda .card-body .form-inline-group input,
+    .filtro-busqueda .card-body .form-inline-group select {
+        flex: 2;
+    }
+    .filtro-busqueda .card-body button {
+        margin-top: 20px;
+    }
+    .publicaciones-container {
+        flex: 1;
+    }
+</style>
+
 <h1 class="text-center">Publicaciones</h1>
 
-{% if publicaciones %}
-    {% for publicacion in publicaciones %}
-    <a href="{% url 'mercado:ver_publicacion' publicacion.id %}" class="text-decoration-none text-dark">
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="row g-0">
-                <div class="col-md-4">  
-                    <img src="{{ publicacion.imagen.url }}" class="img-fluid rounded-start" alt="Imagen del vehículo">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h6 class="card-title">{{ publicacion.marca }} {{ publicacion.modelo }} </h6>
-                        <p class="card-text">{{ publicacion.año }} | {{publicacion.kilometros}} km</p>
-                        <h3 class="card-text">{{ publicacion.moneda }} {{ publicacion.precio|custom_format }}</h3>
-                        <p class="card-text">
-                            <sub>{{publicacion.descripcion}}</sub>
-                        </p>
+<div class="filtro-container">
+    <!-- Formulario de Búsqueda -->
+    <div class="filtro-busqueda">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Filtro de Búsqueda</h5>
+                <form method="GET" action="{% url 'mercado:inicio' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="tipo">Tipo:</label>
+                        {{ form.tipo }}
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="marca">Marca:</label>
+                        {{ form.marca }}
+                    </div>
+                    <div class="form-group">
+                        <label for="modelo">Modelo:</label>
+                        {{ form.modelo }}
+                    </div>
+                    <div class="form-group">
+                        <label for="año">Año:</label>
+                        {{ form.año }}
+                    </div>
+                    <div class="form-group">
+                        <label for="color">Color:</label>
+                        {{ form.color }}
+                    </div>
+                    <div class="form-inline-group">
+                        <label for="kilometros_max">Km max:</label>
+                        {{ form.kilometros_max }}
+                    </div>
+                    <div class="form-inline-group">
+                        <label for="precio_min">Precio min:</label>
+                        {{ form.precio_min }}
+                    </div>
+                    <div class="form-inline-group">
+                        <label for="precio_max">Precio max:</label>
+                        {{ form.precio_max }}
+                    </div>
+                    <div class="form-inline-group">
+                        <label for="moneda">Moneda:</label>
+                        {{ form.moneda }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </form>
             </div>
         </div>
-    </a>
-    {% endfor %}
-{% else %}
-    <p>No hay publicaciones disponibles en este momento.</p>
-{% endif %}
+    </div>
+
+    <div class="publicaciones-container">
+        {% if publicaciones %}
+            {% for publicacion in publicaciones %}
+            <a href="{% url 'mercado:ver_publicacion' publicacion.id %}" class="text-decoration-none text-dark">
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{ publicacion.imagen.url }}" class="img-fluid rounded-start" alt="Imagen del vehículo">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h6 class="card-title">{{ publicacion.marca }} {{ publicacion.modelo }} </h6>
+                                <p class="card-text">{{ publicacion.año }} | {{publicacion.kilometros}} km</p>
+                                <h3 class="card-text">{{ publicacion.moneda }} {{ publicacion.precio|custom_format }}</h3>
+                                <p class="card-text">
+                                    <sub>{{publicacion.descripcion}}</sub>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        {% else %}
+            <p>No hay publicaciones disponibles en este momento.</p>
+        {% endif %}
+    </div>
+</div>
 
 {% endblock %}

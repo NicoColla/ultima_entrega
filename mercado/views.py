@@ -1,13 +1,34 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import VentaVehiculo, Comentario
-from .forms import PublicarForm, ComentarioForm, RespuestaForm
+from .forms import PublicarForm, ComentarioForm, RespuestaForm, FiltroBusquedaForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 
-@login_required
 def inicio(request):
-    publicaciones = VentaVehiculo.objects.select_related('vendedor').all()
-    return render(request, 'barra/inicio.html', {'publicaciones': publicaciones})
+    form = FiltroBusquedaForm(request.GET or None)
+    publicaciones = VentaVehiculo.objects.all()
+
+    if form.is_valid():
+        if form.cleaned_data['tipo']:
+            publicaciones = publicaciones.filter(tipo=form.cleaned_data['tipo'])
+        if form.cleaned_data['marca']:
+            publicaciones = publicaciones.filter(marca=form.cleaned_data['marca'])
+        if form.cleaned_data['modelo']:
+            publicaciones = publicaciones.filter(modelo__icontains=form.cleaned_data['modelo'])
+        if form.cleaned_data['año']:
+            publicaciones = publicaciones.filter(año=form.cleaned_data['año'])
+        if form.cleaned_data['kilometros_max']:
+            publicaciones = publicaciones.filter(kilometros__lte=form.cleaned_data['kilometros_max'])
+        if form.cleaned_data['color']:
+            publicaciones = publicaciones.filter(color=form.cleaned_data['color'])
+        if form.cleaned_data['precio_min']:
+            publicaciones = publicaciones.filter(precio__gte=form.cleaned_data['precio_min'])
+        if form.cleaned_data['precio_max']:
+            publicaciones = publicaciones.filter(precio__lte=form.cleaned_data['precio_max'])
+        if form.cleaned_data['moneda']:
+            publicaciones = publicaciones.filter(moneda=form.cleaned_data['moneda'])
+
+    return render(request, 'barra/inicio.html', {'publicaciones': publicaciones, 'form': form})
 
 @login_required
 def publicar(request):
