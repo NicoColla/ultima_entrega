@@ -51,7 +51,7 @@ def borrar_publicacion(request, publicacion_id):
 @login_required
 def ver_publicacion(request, publicacion_id):
     publicacion = get_object_or_404(VentaVehiculo, id=publicacion_id)
-    comentarios = publicacion.comentarios.all() #Acá me aparece un error en comentarios pero por alguna razón el codigo funciona bien.
+    comentarios = publicacion.comentarios.all() # type: ignore
     form = ComentarioForm()
 
     return render(request, 'barra/publicacion/ver_publicacion.html', {
@@ -83,7 +83,7 @@ def responder_comentario(request, comentario_id):
     comentario = get_object_or_404(Comentario, id=comentario_id)
     publicacion = comentario.publicacion
     if request.user != publicacion.vendedor:
-        return redirect('mercado:ver_publicacion', publicacion_id=publicacion.id)
+        return redirect('mercado:ver_publicacion', publicacion_id=publicacion.id) # type: ignore
 
     if request.method == 'POST':
         form = RespuestaForm(request.POST)
@@ -91,7 +91,7 @@ def responder_comentario(request, comentario_id):
             respuesta = form.save(commit=False)
             respuesta.comentario = comentario
             respuesta.save()
-            return redirect('mercado:ver_publicacion', publicacion_id=publicacion.id)
+            return redirect('mercado:ver_publicacion', publicacion_id=publicacion.id) # type: ignore
 
     form = RespuestaForm()
     return render(request, 'barra/publicacion/respuesta.html', {

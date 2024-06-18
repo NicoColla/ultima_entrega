@@ -1,22 +1,24 @@
-<div class="card my-4">
-    <h5 class="card-header">Comentarios</h5>
-    <div class="card-body">
-        {% if user.is_authenticated %}
-        <form method="post" action="{% url 'mercado:agregar_comentario' publicacion.id %}">
-            {% csrf_token %}
-            <div class="form-group">
-                <textarea class="form-control" name="texto" rows="3" placeholder="Escribe tu comentario aquí..." required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary mt-2">Comentar</button>
-        </form>
-        {% else %}
-        <p class="text-muted">Debes estar <a href="{% url 'usuarios:login' %}">logueado</a> para comentar.</p>
-        {% endif %}
+<div class="mt-4">
+    <h4 class="mb-4">Escribile un comentario al vendedor</h4>
+    <div class="card mb-4">
+        <div class="card-body">
+            {% if user.is_authenticated %}
+            <form method="post" action="{% url 'mercado:agregar_comentario' publicacion.id %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <textarea class="form-control" name="texto" rows="3" placeholder="Escribe tu comentario aquí..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Comentar</button>
+            </form>
+            {% else %}
+            <p class="text-muted">Debes estar <a href="{% url 'usuarios:login' %}">logueado</a> para comentar.</p>
+            {% endif %}
+        </div>
     </div>
 </div>
 
 <div class="mt-4">
-    <h5 class="mb-4">Comentarios:</h5>
+    <h4 class="mb-4">Comentarios de otros usuarios</h4>
     {% for comentario in comentarios %}
     <div class="card mb-3">
         <div class="card-body">
@@ -40,3 +42,4 @@
     <p>No hay comentarios aún. Sé el primero en comentar.</p>
     {% endfor %}
 </div>
+
