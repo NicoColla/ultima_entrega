@@ -34,7 +34,16 @@
             </div>
             {% endif %}
             {% if user == publicacion.vendedor and not comentario.respuesta %}
-            <a href="{% url 'mercado:respuesta' comentario.id %}" class="btn btn-outline-primary mt-2">Responder</a>
+            <button class="btn btn-outline-primary mt-2 responder-btn" data-comentario-id="{{ comentario.id }}">Responder</button>
+            <div class="responder-form" id="responder-form-{{ comentario.id }}" style="display: none;">
+                <form method="post" action="{% url 'mercado:respuesta' comentario.id %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <textarea class="form-control" name="texto" rows="3" style="margin-top: 10px;" placeholder="Escribe tu respuesta aquí..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Enviar respuesta</button>
+                </form>
+            </div>
             {% endif %}
         </div>
     </div>
@@ -42,4 +51,23 @@
     <p>No hay comentarios aún. Sé el primero en comentar.</p>
     {% endfor %}
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const responderButtons = document.querySelectorAll('.responder-btn');
+
+        responderButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const comentarioId = btn.getAttribute('data-comentario-id');
+                const responderForm = document.getElementById(`responder-form-${comentarioId}`);
+
+                if (responderForm.style.display === 'none') {
+                    responderForm.style.display = 'block';
+                } else {
+                    responderForm.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
 
