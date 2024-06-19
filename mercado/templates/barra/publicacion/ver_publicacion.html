@@ -17,6 +17,20 @@
                 <p class="card-text">{{ publicacion.año }} | {{ publicacion.kilometros }} km</p>
                 <h3 class="card-text">ARS {{ publicacion.precio|custom_format }}</h3>
                 <p class="card-text">{{ publicacion.descripcion }}</p>
+                <p class="card-text"><strong>Combustible:</strong> 
+                    {% if publicacion.combustible %}
+                        {{ publicacion.combustible }}
+                    {% endif %}
+                    {% if publicacion.alt_combustible %}
+                        {% if publicacion.combustible %}
+                            {% if publicacion.alt_combustible != publicacion.combustible %}
+                                | {{ publicacion.alt_combustible }}
+                            {% endif %}
+                        {% else %}
+                            {{ publicacion.alt_combustible }}
+                        {% endif %}
+                    {% endif %}
+                </p>
                 <p class="card-text"><strong>Color:</strong> {{ publicacion.color }}</p>
                 <p class="card-text"><strong>Vendedor:</strong> {{ publicacion.vendedor.first_name }} {{ publicacion.vendedor.last_name }} - {{ publicacion.vendedor.email }}</p>
             </div>
