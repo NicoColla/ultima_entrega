@@ -5,7 +5,8 @@ class Usuario(AbstractUser):
     username = None
     email = models.EmailField(unique=True)
     telefono = models.CharField(max_length=15, blank=True, null=True)
-    
+    fecha_nacimiento = models.DateField(blank=True, null=True, verbose_name="Fecha de Nacimiento")
+
     groups = models.ManyToManyField(
         'auth.Group',
         related_name='custom_user_set',

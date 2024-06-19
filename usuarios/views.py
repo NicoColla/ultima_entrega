@@ -22,20 +22,26 @@ def iniciar_sesion(request):
 def registrarse(request):
     if request.method == 'POST':
         form = RegistroForm(request.POST)
-        print("Formulario recibido: ", request.POST)
         if form.is_valid():
-            print("Formulario es válido")
-            user = form.save(commit=False)
-            user.set_password(form.cleaned_data.get('contrasena'))
-            user.save()
-            login(request, user)
-            nombre = form.cleaned_data.get('first_name')
-            apellido = form.cleaned_data.get('last_name')
-            return render(request, 'usuarios/register_success.html', {'nombre': nombre, 'apellido': apellido})
-        else:
-            form.add_error(None, "Algunos datos fueron ingresados incorrectamente.")
+            usuario = form.save(commit=False)
+            usuario.set_password(form.cleaned_data['contrasena'])
+
+            dia = form.cleaned_data['dia_nacimiento']
+            mes = form.cleaned_data['mes_nacimiento']
+            ano = form.cleaned_data['ano_nacimiento']
+
+            if dia and mes and ano:
+                try:
+                    usuario.fecha_nacimiento = f"{ano}-{mes}-{dia}"
+                except ValueError:
+                    pass
+                
+            usuario.save()
+            login(request, usuario)
+            return render(request, 'usuarios/register_success.html', {'nombre': usuario.first_name, 'apellido': usuario.last_name})
     else:
         form = RegistroForm()
+
     return render(request, 'usuarios/register.html', {'form': form})
 
 def cerrar_sesion(request):

@@ -18,13 +18,17 @@ class RegistroForm(forms.ModelForm):
 
     class Meta:
         model = Usuario
-        fields = ['first_name', 'last_name', 'email', 'telefono']
+        fields = ['first_name', 'last_name', 'email', 'telefono', 'dia_nacimiento', 'mes_nacimiento', 'ano_nacimiento']
         labels = {
             'first_name': 'Nombre',
             'last_name': 'Apellido',
             'email': 'Correo Electrónico',
             'telefono': 'Teléfono / Whatsapp',
+            'dia_nacimiento': 'Día de Nacimiento',
+            'mes_nacimiento': 'Mes de Nacimiento',
+            'ano_nacimiento': 'Año de Nacimiento',
         }
+    
     def clean_email(self):
         email = self.cleaned_data.get('email')
         email_pattern = re.compile(r'^[\w\.-]+@[\w\.-]+\.\w{2,3}$')
@@ -36,6 +40,17 @@ class RegistroForm(forms.ModelForm):
         cleaned_data = super().clean()
         contrasena = cleaned_data.get('contrasena')
         confirmar_contrasena = cleaned_data.get('confirmar_contrasena')
+
+        dia = cleaned_data.get('dia_nacimiento')
+        mes = cleaned_data.get('mes_nacimiento')
+        ano = cleaned_data.get('ano_nacimiento')
+
+        if dia and mes and ano:
+            try:
+                fecha_nacimiento = f"{ano}-{mes}-{dia}"
+                cleaned_data['fecha_nacimiento'] = fecha_nacimiento
+            except ValueError:
+                raise forms.ValidationError("La fecha de nacimiento no es válida")
 
         if contrasena and confirmar_contrasena and contrasena != confirmar_contrasena:
             raise forms.ValidationError("Las contraseñas no coinciden")
