@@ -6,8 +6,10 @@
 {% block content %}
 <div class="container mt-5">
     <div class="text-center">
-        <img src="{% static 'fondopaginainicio.jpeg' %}" alt="Imagen de fondo" class="img-fluid" style="width: 50%; height: auto;">
+        <h1 class="display-4"><strong>🛵 Bienvenido a CARgentina 🚗</strong></h1>
+        <h2>El mejor mercado online de vehículos usados del país</h2>    
     </div>
+
     {% block buttons %}
         <div class="d-flex justify-content-center mt-4" style="margin-bottom: 10px;">
             <a href="{% url 'usuarios:login' %}" class="btn btn-primary mx-2">Log-In</a>
