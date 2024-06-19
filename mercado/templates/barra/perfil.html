@@ -3,17 +3,33 @@
 {% block title %}Perfil{% endblock %}
 
 {% block content %}
-<h3>Información del usuario:</h3>
+<style>
+    .perfil {
+        width: 100%;
+        max-width: 500px;
+        margin-bottom: 20px;
+    }
+    .botones {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
 
-<div class="card">
-    <div class="card-body">
+<h3 class="text-center">Información del perfil:</h3>
+
+
+<div class="perfil">
+    <div>
         <h1 class="card-title">{{ usuario.first_name }} {{ usuario.last_name }}</h1>
+        <p class="card-text"><strong>Fecha de nacimiento:</strong> {{ usuario.dia_nacimiento }}-{{ usuario.mes_nacimiento }}-{{ usuario.ano_nacimiento }}</p>
         <p class="card-text"><strong>Correo Electrónico:</strong> {{ usuario.email }}</p>
         <p class="card-text"><strong>Teléfono:</strong> {{ usuario.telefono }}</p>
+        <div class="botones">
+            <a href="{% url 'mercado:publicaciones_usuario' %}" class="btn btn-primary">Publicaciones Activas</a>
+            <a href="{% url 'usuarios:logout' %}" class="btn btn-danger">Cerrar sesion</a>
+        </div>
     </div>
 </div>
-
-<a href="{% url 'mercado:publicaciones_usuario' %}" class="btn btn-primary">Publicaciones Activas</a>
-<a href="{% url 'usuarios:logout' %}" class="btn btn-danger">Cerrar sesion</a>
 
 {% endblock %}
